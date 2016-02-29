@@ -1,0 +1,47 @@
+record(stringout, "$(SYS)$(DEV)OpMessage-SP") {
+    field(OUT, "$(SYS)$(DEV)OpMessage-I PP")
+}
+
+record(stringin, "$(SYS)$(DEV)OpMessage-I") {
+    info(autosaveFields_pass0, "VAL")
+    field(VAL, "(unset)")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS)$(DEV)OpMessageTS-I")
+}
+
+record(stringin, "$(SYS)$(DEV)OpMessageTS-I") {
+    field(DTYP, "Soft Timestamp")
+    field(INP, "@%b %d at %H:%M")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(bi, "$(SYS)$(DEV)ScanRunning-I") {
+    field(ZNAM, "Idle")
+    field(ONAM, "Running")
+    field(VAL, 0)
+    field(PINI, "YES")
+}
+
+record(longin, "$(SYS)$(DEV)NextScanID-Cmd") {
+    field(VAL, 0)
+    field(FLNK, "$(SYS)$(DEV)ScanID-I")
+    # Advance scan ID on startup, just to be safe
+    field(PINI, "YES")
+}
+
+record(calcout, "$(SYS)$(DEV)ScanID-I") {
+    field(INPA, "$(SYS)$(DEV)ScanID-I")
+    field(CALC, "A + 1")
+    field(VAL, 0)
+    field(OUT, "$(SYS)$(DEV)NextScanID-Cmd NPP")
+    info(autosaveFields_pass0, "VAL")
+}
+
+record(waveform, "$(SYS)$(DEV)UID-I") {
+    # Using waveform here as it always reprocesses, so you'll get a monitor
+    # event on start/stop of the scan
+    field(DESC, "Last scan UID")
+    field(FTVL, "STRING")
+    field(MPST, "Always")
+    info(autosaveFields_pass0, "VAL")
+}

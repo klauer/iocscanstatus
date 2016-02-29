@@ -1,0 +1,5 @@
+NAME=scanstatus
+PORT=##TODO VALID PORT HERE##
+HOST=##TODO HOSTNAME HERE##
+USER=softioc
+CHDIR="$CHDIR/iocBoot/iocscanstatus"
